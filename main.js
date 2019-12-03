@@ -63,14 +63,33 @@ $(document).ready(function() {
 
     });
 
+    //Seleziona l'utente dalla lista
+    $('.contact').click(function() {
+        //Rimuovo la classe active all'elemento che l'aveva prima
+        $('.contact.active').removeClass('active');
+        // aggiungo la classe active all'elemento cliccato
+        $(this).addClass('active');
 
+        var index = $(this).index();
+        //Ottengo il nome del contatto selezionato al click
+        var name = $(this).find('.contact-name').text();
+        //Assegno il nome all'header right
+        $('#header-right-contact-name').text(name);
+
+        //Ottengo la foto  del contatto selezionato
+        var name = $(this).find('.contact-logo img').attr('src');
+        console.log(name);
+        //Assegno la foto all'header right
+        $('.header-right-logo img').attr('src',name);
+
+    })
 });
 
 function invia_messaggio() {
     //Recupero il contenuto dell'input del messaggio
     var testo_messaggio = $('.new-message-inputs').val();
     //se il messaggio non è vuoto
-    if (testo_messaggio.length != 0) {
+    if (testo_messaggio.length != 0 || testo_messaggio.trim() !== '') {
         //clono il template del invia_messaggio
         var nuovo_messaggio = $('.template .message').clone();
         //inserisco nel giusto span il testo del invia_messaggio
@@ -79,6 +98,10 @@ function invia_messaggio() {
         nuovo_messaggio.addClass('sent');
         //inserisco il messaggio all'interno del contanaier
         $('.right-messages.active').append(nuovo_messaggio);
+        //Imposto l'orario d'invia_messaggio
+        var time = currentTimeMessage();
+        //stampo l'orario invio messaggio
+        nuovo_messaggio.children('.message-time').text(time);
         //resetto l'input con una stringa vuota
         $('.new-message-inputs').val('');
 
@@ -95,4 +118,14 @@ function answer() {
         nuovo_messaggio.addClass('received');
         //inserisco il messaggio all'interno del contanaier
         $('.right-messages.active').append(nuovo_messaggio);
+        //Imposto l'orario d'invia_messaggio
+        var time = currentTimeMessage();
+        //stampo l'orario invio messaggio
+        nuovo_messaggio.children('.message-time').text(time);
+}
+
+function currentTimeMessage() {
+    var d = new Date();
+    var time = d.getHours() + ":" + d.getMinutes();
+    return time;
 }
