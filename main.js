@@ -64,6 +64,8 @@ $(document).ready(function() {
                 }
 
             });
+        }else{
+            $('.contact').show();
         }
 
     });
@@ -86,6 +88,10 @@ $(document).ready(function() {
         console.log(name);
         //Assegno la foto all'header right
         $('.header-right-logo img').attr('src',name);
+        $('.right-messages').removeClass('active');
+        var codice = $(this).attr('data-codice');
+        $('.right-messages[data-codice="' + codice + '"]').addClass('active');
+
 
     })
 });
