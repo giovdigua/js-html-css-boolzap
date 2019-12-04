@@ -76,24 +76,33 @@ $(document).ready(function() {
         $('.contact.active').removeClass('active');
         // aggiungo la classe active all'elemento cliccato
         $(this).addClass('active');
-
-        var index = $(this).index();
+        //Sposto il contatto selezionato al primo posto nella lista
+        $(this).prependTo($(this).parent());
         //Ottengo il nome del contatto selezionato al click
         var name = $(this).find('.contact-name').text();
         //Assegno il nome all'header right
         $('#header-right-contact-name').text(name);
-
         //Ottengo la foto  del contatto selezionato
         var name = $(this).find('.contact-logo img').attr('src');
-        console.log(name);
         //Assegno la foto all'header right
         $('.header-right-logo img').attr('src',name);
         $('.right-messages').removeClass('active');
+        //Ottengo il codice del contatto selezionato
         var codice = $(this).attr('data-codice');
+        //Associo il codice alla conversazione per il contatto selezionato
         $('.right-messages[data-codice="' + codice + '"]').addClass('active');
+    });
 
 
-    })
+    //Funzione che fa aprire il pannello dettaglio e permette la cancellazione del messaggio 
+    $('.right-messages').on('click','i.fa.fa-chevron-down' ,function(){
+        $(this).siblings('.message-options-panel').toggleClass('active');
+        $('.message-destroy').click(function() {
+            console.log('click');
+            $(this).closest('.message').remove();
+
+        })
+    });
 });
 
 function invia_messaggio() {
