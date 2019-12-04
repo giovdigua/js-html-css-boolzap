@@ -4,20 +4,24 @@ $(document).ready(function() {
     //invio del messaggio
     //intercetto il click
     $('.right-footer-icon.f-right').click(function() {
-        invia_messaggio();
-        //richiamo la funzione di risposta automatica dopo 3 secondi
-        setTimeout(answer , 3000);
+        var invio = invia_messaggio();
+        if (invio.length && invio.trim() !== '') {
+            //richiamo la funzione di risposta automatica dopo 3 secondi
+            setTimeout(answer , 3000);
+    }
     });
 
     //intercetto il tasto invio
     $('.new-message-inputs').keypress(function(event) {
         //controllo se il tasto digitato corrisponde al tasto enter
         if (event.which == 13) {
-            invia_messaggio();
-            //richiamo la funzione di risposta automatica dopo 3 secondi
-            setTimeout(answer , 3000);
+            var invio = invia_messaggio();
+            if (invio.length && invio.trim() !== '') {
+                //richiamo la funzione di risposta automatica dopo 3 secondi
+                setTimeout(answer , 3000);
         }
-    });
+    }
+});
 
     //Intercetto i tasti digitati nell'input
     $('.new-message-inputs').keyup(function() {
@@ -38,9 +42,10 @@ $(document).ready(function() {
     // })
 
     //intercetto l'uscita del focus dall'area di testo del messaaggio
-    $('.new-message-inputs').blur(function() {
-        $('.right-footer-icon.f-right i').toggleClass('fa fa-microphone fas fa-paper-plane');
-    })
+    // $('.new-message-inputs').blur(function() {
+    //     $('.right-footer-icon.f-right i').toggleClass('fa fa-microphone fas fa-paper-plane');
+    //
+    // });
 
 
     //Ricerca se un utente è presente nella lista
@@ -89,7 +94,7 @@ function invia_messaggio() {
     //Recupero il contenuto dell'input del messaggio
     var testo_messaggio = $('.new-message-inputs').val();
     //se il messaggio non è vuoto
-    if (testo_messaggio.length != 0 || testo_messaggio.trim() !== '') {
+    if (testo_messaggio.length != 0 && testo_messaggio.trim() !== '') {
         //clono il template del invia_messaggio
         var nuovo_messaggio = $('.template .message').clone();
         //inserisco nel giusto span il testo del invia_messaggio
@@ -106,6 +111,7 @@ function invia_messaggio() {
         $('.new-message-inputs').val('');
 
     }
+    return testo_messaggio;
 }
 
 //Questa funzione restituisce automaticamente una risposta con la stringa ok
