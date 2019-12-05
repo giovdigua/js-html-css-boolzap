@@ -94,7 +94,7 @@ $(document).ready(function() {
     });
 
 
-    //Funzione che fa aprire il pannello dettaglio e permette la cancellazione del messaggio 
+    //Funzione che fa aprire il pannello dettaglio e permette la cancellazione del messaggio
     $('.right-messages').on('click','i.fa.fa-chevron-down' ,function(){
         $(this).siblings('.message-options-panel').toggleClass('active');
         $('.message-destroy').click(function() {
@@ -144,9 +144,9 @@ function answer() {
         //stampo l'orario invio messaggio
         nuovo_messaggio.children('.message-time').text(time);
 }
-
+//Funzione per ottenere l'orario del messaggio
 function currentTimeMessage() {
     var d = new Date();
-    var time = d.getHours() + ":" + d.getMinutes();
+    var time = d.getHours() + ":" +(d.getMinutes()<10?'0':'')+ d.getMinutes();
     return time;
 }
