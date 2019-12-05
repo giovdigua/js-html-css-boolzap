@@ -1,5 +1,36 @@
 $(document).ready(function() {
 
+    //Popolo i contenitori dei messaggi
+    //scorro tutte le conversazioni contenute nell'oggetto
+    for (var codice_conversazione in conversazioni) {
+        //Recupero i messaggi della conversazione cprrente
+        var messaggi = conversazioni[codice_conversazione];
+        //Ciclo tutti i messaggi di questa codice_conversazione
+
+        //Clono il contenitore dei messaggio
+        var contenitore_messaggi = $('.template .right-messages').clone();
+        contenitore_messaggi.attr('data-codice',codice_conversazione)
+        for (var i = 0; i < messaggi.length; i++) {
+
+            var singolo_messaggio = messaggi[i];
+
+            var testo_mes = singolo_messaggio.testo;
+            var classe_messaggio = singolo_messaggio.direzione;
+
+            //clono il template del invia_messaggio
+            var new_messaggio = $('.template .message').clone();
+            //inserisco nel giusto span il testo del invia_messaggio
+            new_messaggio.children('.message-text').text(testo_mes);
+            //aggiungo al div .message la classe presente
+            new_messaggio.addClass(classe_messaggio);
+            //inserisco il messaggio all'interno del contanaier
+            contenitore_messaggi.append(new_messaggio);
+        }
+        $('.right-messages-container').append(contenitore_messaggi);
+
+    }
+
+
 
     //invio del messaggio
     //intercetto il click
@@ -36,17 +67,6 @@ $(document).ready(function() {
         }
     });
 
-    // //intercetto il focus nell'area di testo del messaaggio
-    // $('.new-message-inputs').focus(function() {
-    //     $('.right-footer-icon.f-right i').toggleClass('fa fa-microphone fas fa-paper-plane');
-    // })
-
-    //intercetto l'uscita del focus dall'area di testo del messaaggio
-    // $('.new-message-inputs').blur(function() {
-    //     $('.right-footer-icon.f-right i').toggleClass('fa fa-microphone fas fa-paper-plane');
-    //
-    // });
-
 
     //Ricerca se un utente è presente nella lista
     $('#contacts-filter').keyup(function(event) {
@@ -77,15 +97,15 @@ $(document).ready(function() {
         // aggiungo la classe active all'elemento cliccato
         $(this).addClass('active');
         //Sposto il contatto selezionato al primo posto nella lista
-        $(this).prependTo($(this).parent());
+        $(this).prependTo($('.contact').parent());
         //Ottengo il nome del contatto selezionato al click
         var name = $(this).find('.contact-name').text();
         //Assegno il nome all'header right
         $('#header-right-contact-name').text(name);
         //Ottengo la foto  del contatto selezionato
-        var name = $(this).find('.contact-logo img').attr('src');
+        var img = $(this).find('.contact-logo img').attr('src');
         //Assegno la foto all'header right
-        $('.header-right-logo img').attr('src',name);
+        $('.header-right-logo img').attr('src',img);
         $('.right-messages').removeClass('active');
         //Ottengo il codice del contatto selezionato
         var codice = $(this).attr('data-codice');
@@ -103,6 +123,9 @@ $(document).ready(function() {
 
         })
     });
+
+    //Simulo il click sul contato che ha la classe actibve
+    $('.contact.active').trigger('click');
 });
 
 function invia_messaggio() {
@@ -149,4 +172,79 @@ function currentTimeMessage() {
     var d = new Date();
     var time = d.getHours() + ":" +(d.getMinutes()<10?'0':'')+ d.getMinutes();
     return time;
+}
+//Oggetti conversazioni mappati con gli id degli utenti
+var conversazioni = {
+    '00':[
+        {
+            'testo': 'Ciao Michele',
+            'direzione': 'sent'
+        },{
+            'testo': 'Ciao anche a te!',
+            'direzione': 'received'
+        }
+    ],
+    '01':[
+        {
+            'testo': 'Ciao Fabio',
+            'direzione': 'sent'
+        },{
+            'testo': 'Ciao anche a te!',
+            'direzione': 'received'
+        }
+    ],
+    '02':[
+        {
+            'testo': 'Ciao Samuele',
+            'direzione': 'sent'
+        },{
+            'testo': 'Ciao anche a te!',
+            'direzione': 'received'
+        }
+    ],
+    '03':[
+        {
+            'testo': 'Ciao Alessandro B.',
+            'direzione': 'sent'
+        },{
+            'testo': 'Ciao anche a te!',
+            'direzione': 'received'
+        }
+    ],
+    '04':[
+        {
+            'testo': 'Ciao Alessandro L.',
+            'direzione': 'sent'
+        },{
+            'testo': 'Ciao anche a te!',
+            'direzione': 'received'
+        }
+    ],
+    '05':[
+        {
+            'testo': 'Ciao Claudia',
+            'direzione': 'sent'
+        },{
+            'testo': 'Ciao anche a te!',
+            'direzione': 'received'
+        }
+    ],
+    '06':[
+        {
+            'testo': 'Ciao Davide',
+            'direzione': 'sent'
+        },{
+            'testo': 'Ciao anche a te!',
+            'direzione': 'received'
+        }
+    ],
+    '07':[
+        {
+            'testo': 'Ciao Federico',
+            'direzione': 'sent'
+        },{
+            'testo': 'Ciao anche a te!',
+            'direzione': 'received'
+        }
+    ]
 }
